@@ -2,12 +2,14 @@ package com.dbUtil.multiple;
 
 import com.dbUtil.handle.MultipleDataSourceHandler;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
@@ -18,13 +20,9 @@ import java.util.logging.Logger;
  * Author:  lining17
  * Date :  28/02/2018
  */
-public class MultipleDataSource extends AbstractRoutingDataSource {
+public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware  {
 
-    private static ApplicationContext context=new
-            ClassPathXmlApplicationContext("classpath*:/*.xml");
-    private static ConfigurableApplicationContext configurableContext = (ConfigurableApplicationContext) context;
-    private static BeanDefinitionRegistry beanDefinitionRegistry = (DefaultListableBeanFactory) configurableContext.getBeanFactory();
-
+    private static ApplicationContext context=new ClassPathXmlApplicationContext("classpath*:/*.xml");
 
     private static final ThreadLocal<String> dataSourceKey = new InheritableThreadLocal<String>();
 
@@ -34,6 +32,8 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
     }
 
     public void init(){
+        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) context;
+        BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) configurableApplicationContext.getBeanFactory();
         GenericBeanDefinition definition = new GenericBeanDefinition();
         definition.setBeanClass(MultipleDataSourceHandler.class);    //设置类
         definition.setScope("singleton");       //设置scope
@@ -68,5 +68,10 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
     @Override
     public Logger getParentLogger() {
         return null;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
     }
 }
