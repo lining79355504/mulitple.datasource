@@ -28,11 +28,11 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
 
 
     public MultipleDataSource(){
-        init();
+
     }
 
     public void init(){
-        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) context;
+        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) this.context;
         BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) configurableApplicationContext.getBeanFactory();
         GenericBeanDefinition definition = new GenericBeanDefinition();
         definition.setBeanClass(MultipleDataSourceHandler.class);    //设置类
@@ -73,5 +73,6 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
+        init();
     }
 }
