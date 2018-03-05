@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
  * Author:  lining17
  * Date :  05/03/2018
  */
-@Qualifier
+@Qualifier("multipleDataSourceHandler")
 public class MultipleDataSourceHandler implements MethodInterceptor, InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(MultipleDataSourceHandler.class);

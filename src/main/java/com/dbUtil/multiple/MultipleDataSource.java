@@ -1,10 +1,12 @@
 package com.dbUtil.multiple;
 
+import com.dbUtil.handle.MultipleDataSourceHandler;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,9 +34,16 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
     }
 
     public void init(){
+        GenericBeanDefinition definition = new GenericBeanDefinition();
+        definition.setBeanClass(MultipleDataSourceHandler.class);    //设置类
+        definition.setScope("singleton");       //设置scope
+        definition.setLazyInit(false);          //设置是否懒加载
+        definition.setAutowireCandidate(true);  //设置是否可以被其他对象自动注入
+        beanDefinitionRegistry.registerBeanDefinition("multipleDataSourceHandler", definition);
+
         BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
-        beanNameAutoProxyCreator.setBeanNames();
-        beanNameAutoProxyCreator.setInterceptorNames();
+        beanNameAutoProxyCreator.setBeanNames("dataSourceSwitchAutoProxy");
+        beanNameAutoProxyCreator.setInterceptorNames("multipleDataSourceHandler");
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(BeanNameAutoProxyCreator.class);
         BeanDefinition beanDefinition=beanDefinitionBuilder.getBeanDefinition();
         beanDefinitionRegistry.registerBeanDefinition("dataSourceSwitchAutoProxy",beanDefinition);
