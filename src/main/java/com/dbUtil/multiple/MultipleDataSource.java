@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * Author:  lining17
  * Date :  28/02/2018
  */
-public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware , BeanDefinitionRegistryPostProcessor{
+public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware {
 
     private static ApplicationContext context ;
 
@@ -72,20 +72,5 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
         init();
-    }
-
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-
-    }
-
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        List<String> proList = Arrays.asList("a*","b*","c*","d*",
-                "e*","f*","g*","p*","h*","i*","j*","k*","l*","m*","n*","o*","q*","r*","s*","t*","w*","u*","v*","z*");
-        BeanDefinition beanDefinition = beanFactory.getBeanDefinition("dataSourceSwitchAutoProxy");
-        MutablePropertyValues mutablePropertyValues = beanDefinition.getPropertyValues();
-        mutablePropertyValues.add("beanNames",proList);
-        mutablePropertyValues.add("interceptorNames" , "multipleDataSourceHandler");
     }
 }
