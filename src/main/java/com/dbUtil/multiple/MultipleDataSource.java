@@ -42,7 +42,8 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
         beanDefinitionRegistry.registerBeanDefinition("multipleDataSourceHandler", definition);
 
         BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
-        beanNameAutoProxyCreator.setBeanNames("P*","A*","B*");
+        beanNameAutoProxyCreator.setBeanNames("a*","b*","c*","d*",
+                "e*","f*","g*","p*","h*","i*","j*","k*","l*","m*","n*","o*","q*","r*","s*","t*","w*","u*","v*","z*");
         beanNameAutoProxyCreator.setInterceptorNames("multipleDataSourceHandler");
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(BeanNameAutoProxyCreator.class);
         BeanDefinition beanDefinition=beanDefinitionBuilder.getBeanDefinition();
