@@ -27,7 +27,7 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
     private static final ThreadLocal<String> dataSourceKey = new InheritableThreadLocal<String>();
 
 
-    public void MultipleDataSource(){
+    public MultipleDataSource(){
         init();
     }
 
