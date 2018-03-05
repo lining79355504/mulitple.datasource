@@ -4,10 +4,8 @@ import com.dbUtil.handle.MultipleDataSourceHandler;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -20,7 +18,7 @@ import java.util.logging.Logger;
  * Author:  lining17
  * Date :  28/02/2018
  */
-public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware  {
+public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware {
 
     private static ApplicationContext context ;
 
@@ -45,7 +43,7 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
         beanNameAutoProxyCreator.setBeanNames("a*","b*","c*","d*",
                 "e*","f*","g*","p*","h*","i*","j*","k*","l*","m*","n*","o*","q*","r*","s*","t*","w*","u*","v*","z*");
         beanNameAutoProxyCreator.setInterceptorNames("multipleDataSourceHandler");
-        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(BeanNameAutoProxyCreator.class);
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(beanNameAutoProxyCreator.getClass());
         BeanDefinition beanDefinition=beanDefinitionBuilder.getBeanDefinition();
         beanDefinitionRegistry.registerBeanDefinition("dataSourceSwitchAutoProxy",beanDefinition);
     }
