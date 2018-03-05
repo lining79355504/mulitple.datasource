@@ -33,7 +33,7 @@ public class MultipleDataSourceHandler implements MethodInterceptor, Initializin
         }
 
 
-        String dataSourceStr = dataSource.dataSource();
+        String dataSourceStr = dataSource.value();
 
         if (StringUtils.isEmpty(dataSourceStr)) {
             logger.warn("use default dataSource ");

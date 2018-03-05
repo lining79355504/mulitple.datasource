@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataSource {
 
-    String dataSource() default "" ;
+    String value() default "" ;
 
 }
