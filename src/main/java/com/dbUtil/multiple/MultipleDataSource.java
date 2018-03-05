@@ -3,6 +3,7 @@ package com.dbUtil.multiple;
 import com.dbUtil.handle.MultipleDataSourceHandler;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.*;
@@ -12,13 +13,15 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Author:  lining17
  * Date :  28/02/2018
  */
-public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware {
+public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware , BeanDefinitionRegistryPostProcessor{
 
     private static ApplicationContext context ;
 
@@ -39,11 +42,7 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
         definition.setAutowireCandidate(true);  //设置是否可以被其他对象自动注入
         beanDefinitionRegistry.registerBeanDefinition("multipleDataSourceHandler", definition);
 
-        BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
-        beanNameAutoProxyCreator.setBeanNames("a*","b*","c*","d*",
-                "e*","f*","g*","p*","h*","i*","j*","k*","l*","m*","n*","o*","q*","r*","s*","t*","w*","u*","v*","z*");
-        beanNameAutoProxyCreator.setInterceptorNames("multipleDataSourceHandler");
-        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(beanNameAutoProxyCreator.getClass());
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(BeanNameAutoProxyCreator.class);
         BeanDefinition beanDefinition=beanDefinitionBuilder.getBeanDefinition();
         beanDefinitionRegistry.registerBeanDefinition("dataSourceSwitchAutoProxy",beanDefinition);
     }
@@ -73,5 +72,20 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
         init();
+    }
+
+    @Override
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+
+    }
+
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        List<String> proList = Arrays.asList("a*","b*","c*","d*",
+                "e*","f*","g*","p*","h*","i*","j*","k*","l*","m*","n*","o*","q*","r*","s*","t*","w*","u*","v*","z*");
+        BeanDefinition beanDefinition = beanFactory.getBeanDefinition("dataSourceSwitchAutoProxy");
+        MutablePropertyValues mutablePropertyValues = beanDefinition.getPropertyValues();
+        mutablePropertyValues.add("beanNames",proList);
+        mutablePropertyValues.add("interceptorNames" , "multipleDataSourceHandler");
     }
 }
