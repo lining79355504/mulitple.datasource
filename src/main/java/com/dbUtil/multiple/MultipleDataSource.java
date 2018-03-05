@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class MultipleDataSource  extends AbstractRoutingDataSource implements ApplicationContextAware  {
 
-    private static ApplicationContext context=new ClassPathXmlApplicationContext("classpath*:/*.xml");
+    private static ApplicationContext context ;
 
     private static final ThreadLocal<String> dataSourceKey = new InheritableThreadLocal<String>();
 
