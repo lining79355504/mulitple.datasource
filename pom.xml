@@ -13,7 +13,7 @@
     <groupId>com.java.mort</groupId>
     <artifactId>mulitple.datasource</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <spring.version>4.3.3.RELEASE</spring.version>
