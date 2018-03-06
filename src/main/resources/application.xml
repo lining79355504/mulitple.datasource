@@ -3,14 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="multipleDataSourceHandler" class="com.dbUtil.handle.MultipleDataSourceHandler"/>
+
     <bean  class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
         <property name="beanNames">
             <list>
-                <value>a*</value>
-                <value>p*</value>
-                <value>u*</value>
-                <value>c*</value>
-                <value>m*</value>
+                <value>*</value>
             </list>
         </property>
         <property name="interceptorNames">
