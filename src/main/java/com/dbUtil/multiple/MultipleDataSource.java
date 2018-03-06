@@ -71,6 +71,6 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
-        init();
+        //init();
     }
 }
