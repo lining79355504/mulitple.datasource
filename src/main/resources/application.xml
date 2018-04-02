@@ -27,7 +27,7 @@
 
     <!--两种切面实现方式  切面顺序 优先级 order -->
     <!--<aop:config>-->
-        <!--<aop:pointcut id="multipleDataSourceMethodPointcut" expression="execution(* com.dianping..*.*(..))"/>-->
+        <!--<aop:pointcut id="multipleDataSourceMethodPointcut" expression="execution(* com.pdian..*.*(..))"/>-->
         <!--<aop:advisor advice-ref="multipleDataSourceHandler" pointcut-ref="multipleDataSourceMethodPointcut" />-->
     <!--</aop:config>-->
 
