@@ -25,7 +25,7 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
 
     private static ApplicationContext context ;
 
-    private static final ThreadLocal<String> dataSourceKey = new InheritableThreadLocal<String>();
+    private static final ThreadLocal<String> dataSourceKey = new ThreadLocal<String>();
 
 
     public MultipleDataSource(){
@@ -49,10 +49,15 @@ public class MultipleDataSource  extends AbstractRoutingDataSource implements Ap
 
 
     public static void setDataSourceKey(String dataSource){
-
         dataSourceKey.set(dataSource);
+    }
+
+    public static void  clearDataSourceKey(){
+
+        dataSourceKey.remove();
 
     }
+
 
     @Override
     protected Object determineCurrentLookupKey() {

@@ -6,9 +6,15 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
@@ -18,16 +24,17 @@ import java.lang.reflect.Method;
  * Date :  05/03/2018
  */
 @Qualifier("multipleDataSourceHandler")
-public class MultipleDataSourceHandler implements MethodInterceptor, InitializingBean {
+public class MultipleDataSourceHandler implements MethodInterceptor, InitializingBean,ApplicationContextAware {
 
     private static final Logger logger = LoggerFactory.getLogger(MultipleDataSourceHandler.class);
+
+    ApplicationContext applicationContext = null ;
 
     public Object invoke(MethodInvocation invocation) throws Throwable {
 
 
         Method method = invocation.getMethod();
         DataSource dataSource = AnnotationUtils.findAnnotation(method, DataSource.class);
-        String defaultDataSource = MultipleDataSource.getCurrentDatasource();
         if (null == dataSource) {
             return invocation.proceed();
         }
@@ -45,7 +52,7 @@ public class MultipleDataSourceHandler implements MethodInterceptor, Initializin
 
         Object result = invocation.proceed();
 
-        MultipleDataSource.setDataSourceKey(defaultDataSource);
+        MultipleDataSource.clearDataSourceKey();
 
         return result;
     }
@@ -56,4 +63,8 @@ public class MultipleDataSourceHandler implements MethodInterceptor, Initializin
     }
 
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }
