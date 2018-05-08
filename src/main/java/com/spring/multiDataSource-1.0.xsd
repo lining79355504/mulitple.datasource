@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema xmlns="http://www.mortV5.com/schema/crane"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://code.dianping.com/schema/crane"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:annotation>
+        <xsd:documentation><![CDATA[
+	Defines the elements used in the Spring Framework's support for crane task execution and scheduling.
+		]]></xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:import namespace="http://www.springframework.org/schema/beans"/>
+
+    <xsd:element name="annotation-driven">
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:string" use="optional">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[crane client id]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+
+            <xsd:attribute name="taskAcceptorPort" type="xsd:int" use="optional">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[client netty port]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+
+            <xsd:attribute name="taskCallBackPort" type="xsd:int" use="optional">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[scheduler netty port]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

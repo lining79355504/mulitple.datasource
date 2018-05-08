@@ -5,6 +5,7 @@
 
     <bean id="multipleDataSourceHandler" class="com.dbUtil.handle.MultipleDataSourceHandler"/>
 
+    <!-- 根据bean name 模糊匹配实现的切面 -->
     <bean  class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
         <property name="beanNames">
             <list>
